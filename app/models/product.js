@@ -5,7 +5,7 @@ module.exports = db.sequelize.define(
     'product',
     {
         product_id: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.INTEGER(11),
             primaryKey: true,
             autoIncrement: true
         },

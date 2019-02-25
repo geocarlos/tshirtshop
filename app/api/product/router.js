@@ -1,6 +1,9 @@
 const express = require('express');
 const router = new express.Router({});
 const Product = require('../../models/product');
+const Department = require('../../models/department');
+const Category = require('../../models/category');
+const { Op } = require('sequelize');
 
 const rootUrl = '/api';
 
@@ -15,39 +18,94 @@ const urls = {
 }
 
 
+Category.hasOne(Department, {foreignKey: 'department_id'});
+
+
 /* --- Handlers --- */
 const handleGetProducts = async (req, res)=> {
     try{
         const products = await Product.findAll();
         return res.json(products);
     } catch(error){
-        console.error(error.message);
         return res.json({error: error})
     }
 };
 
-const handleGetSearchProduct = (req, res) => {
-    return res.json({"search": req.query.search});
+const handleGetSearchProduct = async (req, res) => {
+    try{
+        const products = await Product.findAll({
+            where: {
+                [Op.or]: {
+                    name: {
+                        [Op.like]: '%' + req.query.q + '%'
+                    },
+                    description: {
+                        [Op.like]: '%' + req.query.q + '%'
+                    }
+                }
+            }
+        });
+        return res.json(products);
+    } catch(error){
+        return res.json({error: error});
+    }
 };
 
-const handleGetProduct = (req, res)=> {
-    return res.json({productId:  req.params.id})
+const handleGetProduct = async (req, res)=> {
+    try {
+        const product = await Product.findOne({
+            where: {
+                product_id: req.params.id
+            }
+        })
+        return res.json(product)
+    } catch(error){
+        return res.json({error: error});
+    }
 };
 
-const handleGetDepartments = (req, res) =>{
-    return res.json({message: "This will list all departments"});
+const handleGetDepartments = async (req, res) =>{
+    try{
+        const departments = await Department.findAll();
+        return res.json(departments);
+    } catch(error){
+        return res.json({error: error})
+    }
 };
 
-const handleGetDepartment = (req, res) =>{
-    return res.json({department: req.params.id});
+const handleGetDepartment = async (req, res) =>{
+    try {
+        const department = await Department.findOne({
+            where: {
+                department_id: req.params.id
+            }
+        })
+        return res.json(department)
+    } catch(error){
+        return res.json({error: error});
+    }
 };
 
-const handleGetCategories = (req, res) =>{
-    return res.json({message: "This will list all categories"});
+const handleGetCategories = async (req, res) =>{
+    try{
+        const categories = await Category.findAll();
+        return res.json(categories);
+    } catch(error){
+        return res.json({error: error})
+    }
 };
 
-const handleGetCategory = (req, res) =>{
-    return res.json({category: req.params.id});
+const handleGetCategory = async (req, res) =>{
+    try {
+        const category = await Category.findOne({
+            where: {
+                department_id: req.params.id
+            }
+        })
+        return res.json(category)
+    } catch(error){
+        return res.json({error: error});
+    }
 };
 
 /* --- Routes --- */
