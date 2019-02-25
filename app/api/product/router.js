@@ -17,9 +17,7 @@ const urls = {
     getProduct: rootUrl + '/product/:id([A-Z0-9]+)'
 }
 
-
 Category.hasOne(Department, {foreignKey: 'department_id'});
-
 
 /* --- Handlers --- */
 const handleGetProducts = async (req, res)=> {
@@ -27,7 +25,7 @@ const handleGetProducts = async (req, res)=> {
         const products = await Product.findAll();
         return res.json(products);
     } catch(error){
-        return res.json({error: error})
+        return res.json({error})
     }
 };
 
@@ -47,7 +45,7 @@ const handleGetSearchProduct = async (req, res) => {
         });
         return res.json(products);
     } catch(error){
-        return res.json({error: error});
+        return res.json({error});
     }
 };
 
@@ -60,7 +58,7 @@ const handleGetProduct = async (req, res)=> {
         })
         return res.json(product)
     } catch(error){
-        return res.json({error: error});
+        return res.json({error});
     }
 };
 
@@ -69,7 +67,7 @@ const handleGetDepartments = async (req, res) =>{
         const departments = await Department.findAll();
         return res.json(departments);
     } catch(error){
-        return res.json({error: error})
+        return res.json({error})
     }
 };
 
@@ -82,7 +80,7 @@ const handleGetDepartment = async (req, res) =>{
         })
         return res.json(department)
     } catch(error){
-        return res.json({error: error});
+        return res.json({error});
     }
 };
 
@@ -91,7 +89,7 @@ const handleGetCategories = async (req, res) =>{
         const categories = await Category.findAll();
         return res.json(categories);
     } catch(error){
-        return res.json({error: error})
+        return res.json({error})
     }
 };
 
@@ -104,7 +102,7 @@ const handleGetCategory = async (req, res) =>{
         })
         return res.json(category)
     } catch(error){
-        return res.json({error: error});
+        return res.json({error});
     }
 };
 
