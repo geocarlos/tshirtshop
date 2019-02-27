@@ -75,10 +75,8 @@ module.exports = (passport) => {
 
         (req, email, password, done) => {
 
-            const User = user;
-
             const isValidPassword = function (userpass, password) {
-                return bCrypt.compareSync(password, userpass);
+                return bcrypt.compareSync(password, userpass);
             }
 
             User.findOne({ where: { email: email } }).then(function (user) {

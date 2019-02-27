@@ -17,7 +17,7 @@ router.get('/auth/signup', (req, res) => {
 });
 
 router.get('/auth/signin', (req, res) => {
-    return res.json({signup: req.query.q});
+    return res.json({signin: req.query.q});
 })
 
 module.exports = router;
