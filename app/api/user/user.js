@@ -1,7 +1,8 @@
 const User = require('../../models/customer');
 const ShippingRegion = require('../../models/shipping_region');
 
-User.hasOne(ShippingRegion, {foreignKey: 'shipping_region_id'});
+/* Model associations */
+User.belongsTo(ShippingRegion, {foreignKey: 'shipping_region_id'});
 
 /**
  * GET a list of users in DB

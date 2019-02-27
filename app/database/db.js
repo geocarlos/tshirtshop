@@ -2,7 +2,7 @@ const conf = require('../../config/config.json');
 const Sequelize = require('sequelize');
 const db = {};
 
-const env = process.env.NODE_ENV;
+const env = process.env.NODE_ENV || 'development';
 
 const sequelize = new Sequelize(conf[env].database, conf[env].username, conf[env].password, {
     host: 'localhost',

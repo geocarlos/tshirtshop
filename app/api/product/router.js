@@ -4,7 +4,7 @@ const router = new express.Router({});
  * Routes for handling product-related query.
  * Departments and categories included
  */
-/* --- Handlers --- */
+
 const product = require('./product');
 
 const rootUrl = '/api';
@@ -16,7 +16,8 @@ const urls = {
     getCategories: rootUrl + '/categories',
     getDepartment: rootUrl + '/department/:id([A-Z0-9]+)',
     getCategory: rootUrl + '/category/:id([A-Z0-9]+)',
-    getProduct: rootUrl + '/product/:id([A-Z0-9]+)'
+    getProduct: rootUrl + '/product/:id([A-Z0-9]+)',
+    getProductsByCategory: rootUrl + '/products/category/:id([A-Z0-9]+)'
 }
 
 /* --- Routes --- */
@@ -27,5 +28,6 @@ router.get(urls.getDepartments, product.handleGetDepartments)
 router.get(urls.getDepartment, product.handleGetDepartment);
 router.get(urls.getCategories, product.handleGetCategories)
 router.get(urls.getCategory, product.handleGetCategory);
+router.get(urls.getProductsByCategory, product.handleGetProductsByCategory)
 
 module.exports = router;
