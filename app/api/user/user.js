@@ -9,7 +9,7 @@ User.belongsTo(ShippingRegion, {foreignKey: 'shipping_region_id'});
  * @param {Object} req 
  * @param {Object} res 
  */
-const handleGetUsers = async (req, res)=> {
+const getUsers = async (req, res)=> {
     try{
         const users = await User.findAll();
         return res.json(users);
@@ -23,7 +23,7 @@ const handleGetUsers = async (req, res)=> {
  * @param {Object} req 
  * @param {Object} res 
  */
-const handleGetUser = async (req, res)=>{
+const getUser = async (req, res)=>{
     try{
         const user = await User.findOne({
             where: {
@@ -37,6 +37,6 @@ const handleGetUser = async (req, res)=>{
 }
 
 module.exports = {
-    handleGetUsers,
-    handleGetUser
+    getUsers,
+    getUser
 }

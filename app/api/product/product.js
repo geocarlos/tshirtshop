@@ -15,105 +15,96 @@ AttributeValue.belongsToMany(Product, { through: ProductAttribute });
 
 /**
  * GET a list of all products
- * @param {Object} req 
- * @param {Object} res 
  */
-const handleGetProducts = async (req, res) => {
+const getProducts = async () => {
     try {
         const products = await Product.findAll();
-        return res.json(products);
+        return products;
     } catch (error) {
-        return res.json({ error })
+        throw error;
     }
 };
 
 /**
- * GET a product matching the query term in 'q'
- * @param {Object} req 
- * @param {Object} res 
+ * GET a product matching the query term
+ * @param {String} queryTerm
  */
-const handleGetSearchProduct = async (req, res) => {
+const getSearchProduct = async (queryTerm) => {
     try {
         const products = await Product.findAll({
             where: {
                 [Op.or]: {
                     name: {
-                        [Op.like]: '%' + req.query.q + '%'
+                        [Op.like]: '%' + queryTerm + '%'
                     },
                     description: {
-                        [Op.like]: '%' + req.query.q + '%'
+                        [Op.like]: '%' + queryTerm + '%'
                     }
                 }
             }
         });
-        return res.json(products);
+        return products;
     } catch (error) {
-        return res.json({ error });
+        throw error;
     }
 };
 
 /**
  * GET a product matching the provided ID
- * @param {Object} req 
- * @param {Object} res 
+ * @param {String} product_id
  */
-const handleGetProduct = async (req, res) => {
+const getProduct = async (product_id) => {
     try {
         const product = await Product.findOne({
             where: {
-                product_id: req.params.id
+                product_id
             }
         })
         if (!product) {
-            return res.status(404).json({ message: "No product found with id " + req.params.id })
+            throw { status: 404, message: "No product found with id " + product_id};
         }
-        return res.json(product)
+        return product;
     } catch (error) {
-        return res.json({ error });
+        throw error;
     }
 };
 
 /**
  * GET all departments
- * @param {Object} req 
- * @param {Object} res 
  */
-const handleGetDepartments = async (req, res) => {
+const getDepartments = async () => {
     try {
         const departments = await Department.findAll();
-        return res.json(departments);
+        return departments;
     } catch (error) {
-        return res.json({ error })
+        throw error;
     }
 };
 
 /**
  * GET all departments
- * @param {Object} req 
- * @param {Object} res 
+ * @param {String} department_id
  */
-const handleGetDepartment = async (req, res) => {
+const getDepartment = async (department_id) => {
     try {
         const department = await Department.findOne({
             where: {
-                department_id: req.params.id
+                department_id
             }
         });
         if (!department) {
-            return res.status(404).json({ message: 'Department not found' });
+            throw { status: 404, message: 'Department not found' };
         }
-        return res.json(department)
+        return department;
     } catch (error) {
-        return res.json({ error });
+        throw error;
     }
 };
 
 /**
  * GET a list of all categories with related departments
- * @param {Object} req 
- * @param {Object} res 
  */
-const handleGetCategories = async (req, res) => {
+const getCategories = async () => {
     try {
         const categories = await Category.findAll({
             include: [
@@ -123,62 +114,82 @@ const handleGetCategories = async (req, res) => {
                 }
             ]
         });
-        return res.json(categories);
+        return categories;
     } catch (error) {
-        return res.json({ error })
+        throw error;
     }
 };
 
+const getCategoriesByDepartment = async (department_id) => {
+    try {
+        const department = await Department.findOne({
+            where: {
+                department_id
+            }
+        })
+        if(!department){
+            throw { status: 404, message: 'Department not found'};
+        }
+        const categories = Category.findAll({
+            where: {
+                department_id
+            }
+        });
+        return categories;
+    } catch(error){
+        throw error;
+    }
+}
+
 /**
  * GET a category by ID
- * @param {Object} req 
- * @param {Object} res 
+ * @param {String} category_id
  */
-const handleGetCategory = async (req, res) => {
+const getCategory = async (category_id) => {
     try {
         const category = await Category.findOne({
             where: {
-                category_id: req.params.id
+                category_id
             }
         })
         if (!category) {
-            return res.status(404).json({ message: 'Category not found.' })
+            throw { status: 404, message: 'Category not found.' }
         }
-        return res.json(category)
+        return category;
     } catch (error) {
-        return res.json({ error });
+        throw error;
     }
 };
 
 /**
  * Get a product based on a category matching provided id
- * @param {Object} req 
- * @param {Object} res 
+ * @param {String} category_id
  */
-const handleGetProductsByCategory = async (req, res) => {
+const getProductsByCategory = async (category_id) => {
     try{
         const category = await Category.findOne({
             where: {
-                category_id: req.params.id
+                category_id
             }
         });
         if(!category){
-            return res.status(404).json({message: 'Category not found.'})
+            throw {status: 404, message: 'Category not found.'};
         }
         const products = await category.getProducts();
-        return res.json(products);
+        return products;
     } catch(error){
-        return res.json({message: error})
+        throw error;
     }
 }
 
 module.exports = {
-    handleGetProducts,
-    handleGetSearchProduct,
-    handleGetProduct,
-    handleGetDepartments,
-    handleGetDepartment,
-    handleGetCategories,
-    handleGetCategory,
-    handleGetProductsByCategory
+    getProducts,
+    getSearchProduct,
+    getProduct,
+    getDepartments,
+    getDepartment,
+    getCategories,
+    getCategory,
+    getProductsByCategory,
+    getCategoriesByDepartment
 }
