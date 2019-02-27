@@ -22,8 +22,8 @@ app.use(passport.session()); // persistent login sessions
 app.use('/', require('./auth/router'));
 app.use('/', require('./api/user/router'));
 app.use('/', require('./api/product/router'));
-app.use('/', (req, res)=>{
-    res.status(200).send('Starting');
+app.use((req, res) => {
+    return res.status(404).json({message: 'No route found matching ' + req.url});
 })
 
 module.exports = app;
