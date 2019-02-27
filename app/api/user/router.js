@@ -11,8 +11,22 @@ const urls = {
 }
 
 /* --- Routes --- */
-router.get(urls.getUsers, user.getUsers);
-router.get(urls.getUser, user.getUser);
+router.get(urls.getUsers, async (req, res) => {
+    try {
+        const users = await user.getUsers();
+        return res.json(users);
+    } catch (error) {
+        return res.status(error.status || 401).json(error)
+    }
+});
+router.get(urls.getUser, async (req, res) => {
+    try {
+        const customer = await user.getUser(req.params.id);
+        return res.json(customer);
+    } catch (error) {
+        return res.status(error.status || 401).json(error)
+    }
+});
 
 
 module.exports = router;

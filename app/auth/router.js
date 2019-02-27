@@ -20,4 +20,11 @@ router.get('/auth/signin', (req, res) => {
     return res.json({signin: req.query.q});
 })
 
+router.get('/auth/logout', (req, res, next) => {
+    req.session.destroy((err) => {
+        if(err) return next(err);
+        return res.redirect('/');
+    })
+})
+
 module.exports = router;

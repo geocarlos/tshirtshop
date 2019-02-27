@@ -6,33 +6,33 @@ User.belongsTo(ShippingRegion, {foreignKey: 'shipping_region_id'});
 
 /**
  * GET a list of users in DB
- * @param {Object} req 
- * @param {Object} res 
  */
-const getUsers = async (req, res)=> {
+const getUsers = async ()=> {
     try{
         const users = await User.findAll();
-        return res.json(users);
+        return users;
     } catch(error){
-        return res.json({error})
+        throw error;
     }
 };
 
 /**
  * GET a user matching the provided ID
- * @param {Object} req 
- * @param {Object} res 
+ * @param {String} customer_id 
  */
-const getUser = async (req, res)=>{
+const getUser = async (customer_id)=>{
     try{
         const user = await User.findOne({
             where: {
-                customer_id: req.params.id
+                customer_id
             }
         })
-        return res.json(user);
+        if(!user) {
+            throw {status: 404, message: 'User not found'};
+        }
+        return user;
     }catch(error){
-        return res.json({error})
+        throw error;
     }
 }
 
