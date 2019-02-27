@@ -1,6 +1,10 @@
+const conf = require('../../config/config.json');
 const Sequelize = require('sequelize');
 const db = {};
-const sequelize = new Sequelize('tshirtshop', 'tshirtshop', 'BQMZkuDXZtUMHovu', {
+
+const env = process.env.NODE_ENV;
+
+const sequelize = new Sequelize(conf[env].database, conf[env].username, conf[env].password, {
     host: 'localhost',
     dialect: 'mysql',
     operatorsAliases: false,

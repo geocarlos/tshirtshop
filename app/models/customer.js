@@ -13,10 +13,13 @@ module.exports = db.sequelize.define(
             type: Sequelize.STRING(50)
         },
         email: {
-            type: Sequelize.STRING(100)
+            type: Sequelize.STRING(100),
+            validate: {
+                isEmail: true
+            }
         },
         password: {
-            type: Sequelize.STRING(50)
+            type: Sequelize.STRING(72)
         },
         credit_card: {
             type: Sequelize.TEXT
