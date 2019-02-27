@@ -5,7 +5,7 @@ const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
-require('../config/passport')(passport);
+require('../config/passport-setup')(passport);
 
 /* --- Declare app --- */
 const app = express();

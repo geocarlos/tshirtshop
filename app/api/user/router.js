@@ -13,7 +13,6 @@ const urls = {
 /* --- Routes --- */
 router.get(urls.getUsers, user.handleGetUsers);
 router.get(urls.getUser, user.handleGetUser);
-router.post(urls.postUserSignup, user.handleUserSignUp)
 
 
 module.exports = router;

@@ -5,7 +5,7 @@ module.exports = (passport) => {
     const LocalStrategy = require('passport-local').Strategy;
 
     passport.serializeUser((user, done) => {
-        return done(null, user.id);
+        return done(null, user.customer_id);
     });
 
     passport.deserializeUser((id, done) => {
@@ -55,7 +55,7 @@ module.exports = (passport) => {
                     };
 
                     User.create(data).then((newUser, created) => {
-                        if (newUser) {
+                        if (!newUser) {
                             return done(null, false);
                         }
                         return done(null, newUser);
