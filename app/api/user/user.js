@@ -1,5 +1,5 @@
 const User = require('../../models/customer');
-const ShippingRegion = require('../../models/shipping_region');
+const ShippingRegion = require('../../models/shipping-region');
 
 /* Model associations */
 User.belongsTo(ShippingRegion, {foreignKey: 'shipping_region_id'});
