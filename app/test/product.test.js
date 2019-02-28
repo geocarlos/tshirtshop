@@ -36,7 +36,7 @@ describe("Get a product by its ID", ()=>{
         .get('/api/product/1')
         .expect(200)
         .expect(res => {
-            expect(res.body).have.property('name')
+            expect(res.body).to.have.property('name')
         })
         .end(done)
     });

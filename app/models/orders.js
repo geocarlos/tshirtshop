@@ -17,7 +17,7 @@ module.exports = db.sequelize.define(
             defaultValue: Sequelize.NOW,
             allowNull: false
         },
-        shippeed_on: {
+        shipped_on: {
             type: Sequelize.DATE,
         },
         status: {
@@ -42,7 +42,7 @@ module.exports = db.sequelize.define(
         },
         tax_id: {
             type: Sequelize.INTEGER(11),
-        },
+        }
     },
     {
         timestamps: false,

@@ -36,7 +36,38 @@ const getUser = async (customer_id)=>{
     }
 }
 
+/**
+ * Update user's data
+ * @param {Object} data e.g. The resquest body 
+ */
+const updateUser = async data => {
+    try {
+        return await User.update({
+            name: data.name,
+            email: data.email,
+            credit_card: data.credit_card,
+            address_1: data.address_1,
+            address_2: data.address_2,
+            city: data.city,
+            region: data.region,
+            postal_code: data.postal_code,
+            country: data.country,
+            day_phone: data.day_phone,
+            eve_phone: data.eve_phone,
+            mob_phone: data.mob_phone
+        },
+        {
+            where: {
+                customer_id: data.customer_id
+            }
+        });
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     getUsers,
-    getUser
+    getUser,
+    updateUser
 }
