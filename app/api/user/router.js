@@ -38,7 +38,7 @@ router.get(urls.getUser, async (req, res) => {
 /**
  * Update user details
  */
-router.use(urls.updateUserDetails = async (req, res) => {
+router.post(urls.updateUserDetails, async (req, res) => {
     if(!req.isAuthenticated()){
         return res.status(401).json({error: "User is not logged in."});
     }

@@ -1,4 +1,4 @@
-const User = require('../app/models/customer');
+const User = require('../models/customer');
 const bcrypt = require('bcrypt-nodejs');
 
 module.exports = (passport) => {

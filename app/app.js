@@ -6,7 +6,8 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
-require('../config/passport-setup')(passport);
+const cors = require('cors')
+require('./config/passport-setup')(passport);
 
 /* --- Declare app --- */
 const app = express();
@@ -19,6 +20,7 @@ app.use(session({ secret: 'keyboard cat',resave: true, saveUninitialized:true}))
 app.use(cookieParser())
 app.use(passport.initialize());
 app.use(passport.session()); 
+app.use(cors());
 
 /* --- Routes --- */
 app.use('/', require('./auth/router'));
