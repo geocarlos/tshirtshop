@@ -1,5 +1,6 @@
 const express = require('express');
 const router = new express.Router({});
+const { memcached } = require('../../middleware/middleware');
 /**
  * Routes for handling product-related query.
  * Departments and categories included
@@ -39,7 +40,7 @@ router.get(urls.getSearchProduct, async (req, res) => {
         return res.status(error.status || 401).json(error);
     }
 });
-router.get(urls.getProduct, async (req, res) => {
+router.get(urls.getProduct, memcached(20), async (req, res) => {
     try {
         const item = await product.getProduct(req.params.id);
         return res.json(item);

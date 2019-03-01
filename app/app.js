@@ -28,8 +28,9 @@ app.use('/', require('./api/user/router'));
 app.use('/', require('./api/product/router'));
 app.use('/', require('./api/shopping-cart/router'));
 app.use('/', require('./api/order/router'));
+app.use('/', express.static(__dirname + '/static/front-end'));
+app.use('/api/media', express.static(__dirname + '/static/api'));
 app.use((req, res) => {
-    console.log(req.isAuthenticated());
     return res.status(404).json({message: 'No route found matching ' + req.url});
 })
 
